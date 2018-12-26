@@ -32,12 +32,9 @@ export default new Vuex.Store({
       state.token = token
     },
     //保存登录用户的token信息,更改登录状态
-    saveLoginUser (state, { token, user, isLogin }) {
-      if (token) {
-        state.token = token
-        state.loginUser = user
-        state.isLogin = isLogin
-      }
+    saveLoginUser (state, { user, isLogin }) {
+      state.loginUser = user
+      state.isLogin = isLogin
     },
     //更改登录状态
     changeLogin (state, loginState) {
@@ -67,21 +64,19 @@ export default new Vuex.Store({
   },
   actions: {
     loginAction ({ commit }, userInfo) {
-      let { userAccount = '', pwd = '', token } = userInfo;
+      let { userAccount = '', pwd = '' } = userInfo;
       return new Promise((resolve, reject) => {
         let url = process.env.VUE_APP_serverURL + '/api/user/login'
         http.post(url, {
           userAccount: userAccount,
-          pwd: pwd,
-          token: token
+          pwd: pwd
         }).then(res => {
           let data = res.data;
           if (data.resCode === 1) {
-            console.log(data)
             let token = data.userToken
-            cookie.setCookie('loginToken', JSON.stringify(token), 7)
+            console.log(data)
+            cookie.setCookie('loginToken', token, 7)
             commit('saveLoginUser', {
-              token: token,
               user: data.userInfo,
               isLogin: true
             })

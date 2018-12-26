@@ -85,6 +85,9 @@ body{
     color: #fff;
 }
 .btn {margin-left: 15px;}
+.pdt-60{
+    padding-top: 60px;
+}
 .pop-bd {
     overflow: hidden
 }
@@ -531,7 +534,7 @@ body{
 }
 .userInfo-entry-wrap {
   position:absolute;
-  top:25px;
+  top:10px;
   right:60px;
   z-index:9;
   .user-header{
@@ -975,6 +978,14 @@ body{
     margin-left:-200px;
     width:400px;
 }
+.el-aside i {
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+    display: inline-block;
+  }
 @media only screen and (max-width: 640px){
     body{width:auto}
     .home-header{
@@ -1070,4 +1081,5 @@ body{
     .lg-err-tip{
         left:15px;
     }
+    
 }

@@ -23,15 +23,15 @@
               <h3 class="user-name">{{loginUser.userName}}</h3>
             </div>
             <div class="info-lists">
-              <a v-if="loginUser.isAdmin" href="/admin">
+              <router-link v-if="loginUser.isAdmin" to="/admin">
                 <div class="list">后台管理</div>
-              </a>
-              <a href="/user/profile">
+              </router-link>
+              <router-link v-if="loginUser.isAdmin" to="/admin">
                 <div class="list">内容二</div>
-              </a>
-              <a href="/user/profile">
+              </router-link>
+              <router-link v-if="loginUser.isAdmin" to="/admin">
                 <div class="list">内容三</div>
-              </a>
+              </router-link>
               <a href="javascript:;" id="logoutBtn">
                 <div class="list logout" @click="logoutFun">退出</div>
               </a>
@@ -41,7 +41,8 @@
       </div>
     </header>
     <div v-if="isShowLogin" class="login-pop-wrap j_popup" id="loginPop">
-      <i class="close-icon j_close icon-remove" @click="closePop"></i>
+      <i class="close-icon el-icon-close" @click="closePop"></i>
+      <!-- <i class="close-icon j_close icon-remove" ></i> -->
       <component :is="$store.state.loginPopCont"></component>
     </div>
   </div>
@@ -54,7 +55,7 @@
   import { mapState, mapMutations } from 'vuex'
   import cookie from '@/assets/js/cookie.js'
   export default {
-    name: 'Login',
+    name: 'Header',
     components: {
       LoginCont,
       RgstCont,

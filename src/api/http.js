@@ -5,9 +5,6 @@ const getToken = () => {
 }
 const http = axios.create({
   timeout: 15000,
-  headers: {
-    "access-token": getToken()
-  },
 });
 console.log(getToken());
 http.interceptors.request.use(config => {
