@@ -26,31 +26,6 @@
   </el-main>
 
 </template>
-<style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-
-  .el-aside {
-    color: #333;
-  }
-
-  .el-row {
-    margin-bottom: 20px;
-  }
-
-  .el-input {
-    width: 200px;
-    margin-right: 10px;
-  }
-
-  .el-pagination {
-    margin-left: -5px;
-    padding: 20px 0;
-  }
-</style>
 <script>
   import http from '@/api/http.js'
   export default {

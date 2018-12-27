@@ -24,7 +24,7 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <component is="categoryCont" />
+        <component is="addContent" />
       </el-container>
     </el-container>
   </div>
@@ -43,17 +43,45 @@
     margin-left: -5px;
     padding: 20px 0;
   }
+
+  .el-tag {
+    margin: 5px 0 0;
+  }
+
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+
+
+  .el-aside {
+    color: #333;
+  }
+
+  .el-row {
+    margin-bottom: 20px;
+  }
+
+  .el-input {
+    width: 200px;
+    margin-right: 10px;
+  }
 </style>
 <script>
   import Header from '@/components/Header.vue'
   import usersCont from '@/components/adminTemp/usersCont.vue'
   import categoryCont from '@/components/adminTemp/categoryCont.vue'
+  import contentCont from '@/components/adminTemp/contentCont.vue'
+  import addContent from '@/components/adminTemp/addContent.vue'
   export default {
     name: 'adminPage',
     components: {
       Header,
       usersCont,
-      categoryCont
+      categoryCont,
+      contentCont,
+      addContent
     },
     data() {
       return {

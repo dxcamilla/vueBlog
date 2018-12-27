@@ -79,6 +79,15 @@ const loginFormatCheck = args => {
         return true;
     }
 }
+// const categoriesInit = http.get(this.queryUrl)
+//     .then(res => {
+//         let data = res.data;
+//         if (data.resCode === 1) {
+//             this.tableData = data.categories
+//         }
+//     }).catch(err => {
+//         console.log(err)
+//     })
 /*
 * 自定confirm函数
 * msg: 提示语
