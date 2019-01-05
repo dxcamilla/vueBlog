@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Header />
+    <Header></Header>
     <header class="home-header header" id="largeHeader">
       <nav class="hb-menu" :class="[hbShow ? 'show-nav': '']">
         <a class="hb-btn j_hbmenu-switch" @click="swicthHb" href="javascript:;">
@@ -27,36 +27,78 @@
         <div class="img" style="background-image:url(/img/by_bg.jpg)"></div>
       </div>
     </header>
-    <homeCont :stickContent="stickCont" :lastContent="lastCont" />
+    <!-- <homeCont :Content="Content" /> -->
+    <div v-if="Content.length > 0" class="container max-1180 home-container">
+      <div class="tab-wrap">
+        <div class="tab-list cur"><i class="icon-home"></i> 主页</div>
+        <div class="tab-list"><i class="icon-tags"></i> 分类</div>
+        <div class="tab-list"><i class="icon-heart"></i> 关于</div>
+      </div>
+      <div class="blog-part stick">
+        <div class="chief-block">
+          <div class="chief-tt blog-left">
+            <div class="tag">
+              <div class="tag-in">
+                <i class="icon-pushpin"></i>置顶
+              </div>
+            </div>
+            <h3 class="cat-tt">{{Content[0].title}}</h3>
+          </div>
+          <div class="chief-summary blog-right">
+            <p class="summary">{{Content[0].summary}}</p>
+            <a href="#" class="more">More</a>
+          </div>
+        </div>
+      </div>
+      <div class="blog-part">
+        <div class="chief-block">
+          <div class="chief-summary blog-left">
+            <p class="summary">{{Content[1].summary}}</p>
+            <a href="#" class="more">More</a>
+          </div>
+          <div class="chief-tt blog-right">
+            <div class="tag">
+              <div class="tag-in">
+                <i class="icon-refresh"></i>最新
+              </div>
+            </div>
+            <h3 class="cat-tt">{{Content[1].title}}</h3>
+            <!-- content::{{content}} -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   // @ is an alias to /src
   import Header from '@/components/Header.vue'
-  import homeCont from '@/components/homeCont.vue'
+  // import homeCont from '@/components/homeCont.vue'
   import bubble from '@/assets/js/bubble.js'
-  import http from '@/api/http.js'
+  import { api_new_content } from '@/api/home'
   export default {
     data() {
       return {
         serverUrl: process.env.VUE_APP_serverURL,
         hbShow: false,
         stickCont: {},
-        lastCont: {}
+        lastCont: {},
+        Content: []
       }
     },
     mounted() {
       bubble();
-      const url = this.serverUrl;
-      http.get(url).then(res => {
-        let data = res.data;
-        if (data.resCode === 1) {
-          this.stickCont = data.content[0];
-          this.lastCont = data.content[1];
-        }
-      })
+      this.searchContent()
     },
     methods: {
+      searchContent() {
+        api_new_content().then(res => {
+          console.log(res)
+          // this.stickCont = res.content[0];
+          // this.lastCont = res.content[1];
+          this.Content = res.content
+        })
+      },
       swicthHb() {
         this.hbShow = !this.hbShow
       }
@@ -64,7 +106,7 @@
     name: 'home',
     components: {
       Header,
-      homeCont
+      // homeCont
     }
   }
 </script>

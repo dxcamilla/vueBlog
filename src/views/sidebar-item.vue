@@ -23,32 +23,8 @@
         type: Object,
         require: true
       }
-    },
-    data() {
-      item: [{
-        type: {
-          name: '123',
-          desc: '1231'
-        },
-        require: true
-      },
-      {
-        type: {
-          name: '123',
-          desc: '1231'
-        },
-        require: true
-      },
-      {
-        type: {
-          name: '123',
-          desc: '1231'
-        },
-        require: true
-      },
-      ]
     }
-  };
+  }
 </script>
 <style lang="scss" scoped>
   .menu-iconfont {

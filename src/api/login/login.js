@@ -1,9 +1,5 @@
-const http = require('@/api/http.js');
-export default function login () {
-    http.post(url, data)
-        .then(res => {
-
-        }).catch(err => {
-            console.log('登录失败')
-        })
+import http from '../http'
+export const api_login = () => {
+    const url = process.env.VUE_APP_serverURL + '/api/user/tokenLogin';
+    return http.post(url)
 }

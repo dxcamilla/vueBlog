@@ -66,23 +66,22 @@ export default new Vuex.Store({
     loginAction ({ commit }, userInfo) {
       let { userAccount = '', pwd = '' } = userInfo;
       return new Promise((resolve, reject) => {
-        let url = process.env.VUE_APP_serverURL + '/api/user/login'
+        let url = process.env.VUE_APP_serverURL + '/user/login'
         http.post(url, {
           userAccount: userAccount,
           pwd: pwd
         }).then(res => {
-          let data = res.data;
-          if (data.resCode === 1) {
-            let token = data.userToken
-            console.log(data)
+          if (res.resCode === 1) {
+            let token = res.userToken
+            console.log(res)
             cookie.setCookie('loginToken', token, 7)
             commit('saveLoginUser', {
-              user: data.userInfo,
+              user: res.userInfo,
               isLogin: true
             })
             commit('showLogin', false)
           }
-          commit('changeLoginTip', data.resMsg)
+          commit('changeLoginTip', res.resMsg)
           resolve()
         }).catch(err => {
           commit('changeLoginTip', err)

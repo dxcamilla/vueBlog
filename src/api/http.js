@@ -1,12 +1,13 @@
 import axios from 'axios'
 import cookie from '@/assets/js/cookie.js'
+import { Message } from 'element-ui'
 const getToken = () => {
   return cookie.getCookie('loginToken') || '';
 }
+console.log(getToken())
 const http = axios.create({
   timeout: 15000,
 });
-console.log(getToken());
 http.interceptors.request.use(config => {
   config.headers['access-token'] = getToken()
   // if (config.method === 'post') {
@@ -16,7 +17,15 @@ http.interceptors.request.use(config => {
   return config;
 });
 http.interceptors.response.use(res => {
-  return res;
+  const data = res.data;
+  if (data.resCode !== 1) {
+    Message({
+      message: data.resMsg,
+      type: 'error'
+    })
+    return Promise.reject('error');
+  }
+  return data;
 }, error => {
   console.log(error);
   return Promise.reject(error);

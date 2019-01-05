@@ -1,25 +1,25 @@
 module.exports = {
   root: true,
-  parserOptions: {
-    sourceType: 'module'
-  },
   env: {
-    browser: true
+    node: true
   },
-  extends: 'eslint:recommended',
+  extends: ['plugin:vue/essential', '@vue/standard'],
   rules: {
     'no-console': 0,
     'no-debugger': 2,
-    semi: 0,
+    // 语句强制分号结尾
+    semi: [2, 'always'],
     'handle-callback-err': 0,
     eqeqeq: ['error', 'smart'],
     'one-var': 'off',
     camelcase: 0,
     'no-var': 2,
+    // 优先使用数组和对象解构
     'prefer-destructuring': 0,
     'no-duplicate-imports': 2,
-    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
-    'no-unused-vars': 0,
-    'no-undef': 0
+    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }]
+  },
+  parserOptions: {
+    parser: 'babel-eslint'
   }
-}
+};

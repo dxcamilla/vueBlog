@@ -68,10 +68,10 @@
       queryInit() {
         http.get(this.queryUrl)
           .then(res => {
-            let data = res.data;
+            console.log(res)
+            let data = res;
             if (data.resCode === 1) {
               this.tableData = data.categories
-              console.log(this.tableData)
             }
           }).catch(err => {
             console.log(err)
