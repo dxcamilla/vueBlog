@@ -2,12 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About'
-import sidebarItem from '../views/sidebar-item'
-import adminPage from '../views/admin/adminPage'
 import admin from '../views/Layout/admin'
-import usersCont from '@/components/adminTemp/usersCont.vue'
-import categoryCont from '@/components/adminTemp/categoryCont.vue'
-import contentCont from '@/components/adminTemp/contentCont.vue'
+import usersCont from '@/views/Layout/adminTemp/usersCont.vue'
+import categoryCont from '@/views/Layout/adminTemp/categoryCont.vue'
+import contentCont from '@/views/Layout/adminTemp/contentCont.vue'
 
 Vue.use(Router)
 
@@ -36,7 +34,6 @@ export default new Router({
           name: 'usersCont',
           component: usersCont
         },
-
         {
           path: 'categoryCont',
           name: 'categoryCont',
@@ -49,6 +46,5 @@ export default new Router({
         },
       ]
     },
-
   ]
 })

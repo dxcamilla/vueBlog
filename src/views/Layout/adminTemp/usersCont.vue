@@ -1,6 +1,4 @@
 <template>
-
-
   <el-main>
     <el-row>
       <el-input placeholder="请输入内容" prefix-icon="el-icon-search" style="width:200px;">
@@ -28,26 +26,28 @@
 </template>
 <script>
   import http from '@/api/http.js'
+  import { admin_userManage } from '@/api/admin/userManage'
   export default {
     name: 'usersCont',
     components: {
     },
     data() {
       return {
-        serverUrl: process.env.VUE_APP_serverURL,
         tableData: []
       }
     },
     mounted() {
       let pageNum = 1;
-      const url = this.serverUrl + '/admin/usersManage?page=' + pageNum
-      http.get(url)
-        .then(res => {
-          let data = res.data;
-          if (data.resCode === 1) {
-            this.tableData = data.users
-            console.log(this.tableData)
+      console.log(typeof admin_userManage)
+      admin_userManage(
+        {
+          params: {
+            page: pageNum
           }
+        }
+      )
+        .then(res => {
+          this.tableData = res.users
         })
     },
     methods: {

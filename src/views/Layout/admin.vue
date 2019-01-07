@@ -15,10 +15,7 @@
 </template>
 <script>
   import Header from '@/components/Header.vue'
-  // import usersCont from '@/components/adminTemp/usersCont.vue'
-  // import categoryCont from '@/components/adminTemp/categoryCont.vue'
-  // import contentCont from '@/components/adminTemp/contentCont.vue'
-  import sideBar from '@/components/adminTemp/sideBar.vue'
+  import sideBar from '@/views/Layout/adminTemp/sideBar.vue'
   export default {
     name: 'adminPage',
     components: {

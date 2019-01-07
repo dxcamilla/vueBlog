@@ -68,7 +68,6 @@
           resource: '',
           desc: ''
         }
-
       }
     },
     mounted() {

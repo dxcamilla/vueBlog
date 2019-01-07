@@ -73,9 +73,8 @@
 <script>
   // @ is an alias to /src
   import Header from '@/components/Header.vue'
-  // import homeCont from '@/components/homeCont.vue'
   import bubble from '@/assets/js/bubble.js'
-  import { api_new_content } from '@/api/home'
+  import { api_new_content } from '@/api/index'
   export default {
     data() {
       return {
@@ -94,8 +93,6 @@
       searchContent() {
         api_new_content().then(res => {
           console.log(res)
-          // this.stickCont = res.content[0];
-          // this.lastCont = res.content[1];
           this.Content = res.content
         })
       },
@@ -105,8 +102,7 @@
     },
     name: 'home',
     components: {
-      Header,
-      // homeCont
+      Header
     }
   }
 </script>
