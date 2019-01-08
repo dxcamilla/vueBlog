@@ -26,10 +26,10 @@
               <router-link v-if="loginUser.isAdmin" to="/admin">
                 <div class="list">后台管理</div>
               </router-link>
-              <router-link v-if="loginUser.isAdmin" to="/admin">
+              <router-link to="/admin">
                 <div class="list">内容二</div>
               </router-link>
-              <router-link v-if="loginUser.isAdmin" to="/admin">
+              <router-link to="/admin">
                 <div class="list">内容三</div>
               </router-link>
               <a href="javascript:;" id="logoutBtn">

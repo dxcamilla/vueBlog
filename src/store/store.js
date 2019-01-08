@@ -80,7 +80,6 @@ export default new Vuex.Store({
           resolve()
         }).catch(err => {
           commit('changeLoginTip', err)
-          reject(err)
         });
       })
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="login-content">
-    <h1 class="login-tt">注册<a href="javascript:;" class="y-a-line j_login-btn">登录</a></h1>
+    <h1 class="login-tt">注册<a href="javascript:;" class="y-a-line j_login-btn" @click="loginPopEmit">登录</a></h1>
     <div class="in-label">
       <input v-if="!isForgetPwd" class="in j_userAccount" type="text" placeholder="请输入昵称" v-model="username">
     </div>
@@ -21,6 +21,7 @@
 <script>
   import { loginFormatCheck } from '@/assets/js/common.js'
   import http from '@/api/http.js'
+  import { user_setPwd } from '@/api/login/accountRequest'
   import { mapState, mapMutations } from 'vuex'
   export default {
     name: 'Login',
@@ -45,32 +46,29 @@
         'saveRgstUser',
       ]),
       rstSecondStep(e) {
-        let url = this.serverUrl + "/api/user/registerNext",
-          args = { "password2": this.pwd1, "password": this.pwd2 };
+        let args = { "password2": this.pwd1, "password": this.pwd2 };
         if (loginFormatCheck(args) === true) {
-          http.post(url, {
+          user_setPwd({
             userAccount: this.rgstUser.userAccount,
             userName: this.username,
             pwd1: this.pwd1,
             pwd2: this.pwd2,
             isForgetPwd: this.isForgetPwd
           }).then(res => {
-            console.log(res)
-            let data = res.data
-            console.log(this.pwd1)
-            if (data.resCode === 1) {
-              this.saveRgstUser({
-                userAccount: this.rgstUser.userAccount,
-                pwd: this.pwd1
-              })
-              this.popSwitch("RgstSuccessCont")
-            }
-            this.errtip = data.resMsg
+            this.saveRgstUser({
+              userAccount: this.rgstUser.userAccount,
+              pwd: this.pwd1
+            })
+            this.popSwitch("RgstSuccessCont")
+            this.errtip = res.resMsg
           }).catch(err => {
-            this.errtip = '注册失败'
+            this.errtip = err
           })
         }
-      }
+      },
+      loginPopEmit() {
+        this.popSwitch("LoginCont")
+      },
     }
   }
 </script>

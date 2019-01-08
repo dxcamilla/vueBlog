@@ -14,22 +14,22 @@
       <el-table-column prop="category" label="分类名称"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="delCatePop(scope.row)">删除</el-button>
+          <el-button style="color:#F56C6C" type="text" @click="delCatePop(scope.row)">删除</el-button>
           <el-button type="text" @click="editPop(scope.row)">更改</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog :title="addCateTitle" :visible.sync="dialogEditCate">
-      <el-form :model="form">
+      <el-form :model="rowEdit">
         <el-form-item label="分类名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="rowEdit.name" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogEditCate = false">取 消</el-button>
-        <el-button v-if="rowEdit.name" type="primary" @click="addCate">确 定</el-button>
-        <el-button v-else type="primary" @click="changeCate">修 改</el-button>
+        <el-button v-if="rowEdit.id" type="primary" @click="changeCate">修 改</el-button>
+        <el-button v-else type="primary" @click="addCate">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="删除提示" :visible.sync="dialogDelCate" width="30%" center>
@@ -67,12 +67,8 @@
         dialogDelCate: false,
         addCateTitle: '添加分类',
         changeId: '',
-        rowDel: false,
         rowEdit: {
           id: '',
-          cate: ''
-        },
-        form: {
           name: ''
         },
         formLabelWidth: '120px'
@@ -98,7 +94,6 @@
         }
         this.delIds = arr
         this.delCateName = arrName
-        console.log(arrName)
       },
 
       // 弹出添加/修改分类弹框
@@ -108,26 +103,29 @@
         console.log(cateId)
         if (cateId) {
           this.addCateTitle = '修改分类'
-          this.form.name = cateName;
           this.rowEdit = {
             id: cateId,
             name: cateName
           }
         } else {
           this.addCateTitle = '添加分类'
+          this.rowEdit = {
+            id: '',
+            name: ''
+          }
         }
         this.dialogEditCate = true;
       },
       // 添加分类
       addCate() {
-        if (!this.form.name) {
+        if (!this.rowEdit.name) {
           this.$message({
             message: '木有分类名',
             type: 'warning'
           });
           return
         }
-        let name = this.form.name
+        let name = this.rowEdit.name
         console.log(name);
         admin_addCategory({
           params: {
@@ -159,20 +157,19 @@
               message: '修改成功',
               type: 'success'
             });
-            this.rowEdit = {
-              id: '',
-              name: ''
-            }
             this.queryInit()
             this.dialogEditCate = false;
           }).catch(err => {
             this.$message.error(err)
           })
-      },// 删除弹框
+      },
+      // 删除弹框
       delCatePop(row) {
         const cateId = row._id;
         if (cateId) {
           this.delIds = cateId
+          this.delCateName = [];
+          this.delCateName.push(row.category);
         }
         if (this.delIds.length === 0) {
           this.$message({
@@ -185,6 +182,7 @@
       },
       // 删除分类
       delCate() {
+        console.log("cateIds", this.delIds)
         admin_delCategory({
           params: {
             cateIds: this.delIds

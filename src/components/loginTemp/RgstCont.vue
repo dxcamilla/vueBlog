@@ -19,6 +19,7 @@
 <script>
   import { loginFormatCheck } from '@/assets/js/common.js'
   import http from '@/api/http.js'
+  import { user_sendCode, user_rgstFirstStep } from '@/api/login/accountRequest'
   import { mapState, mapMutations } from 'vuex'
   export default {
     name: 'Login',
@@ -45,31 +46,27 @@
           return false;
         }
         let accountTxt = this.rgstMail;
-        let args = { "account": accountTxt },
-          url = this.serverUrl + "/api/user/sendCode";
+        let args = { "account": accountTxt };
         if (loginFormatCheck(args) === true) {
-          http.post(url, {
+          user_sendCode({
             userAccount: accountTxt,
             isForgetPwd: this.isForgetPwd
           }).then(res => {
-            let data = res.data;
-            if (data.resCode === 1) {
-              let timeNum = 60;
-              var timer = setInterval(() => {
-                if (timeNum > 0) {
-                  timeNum--;
-                  this.sendTip = `( ${timeNum} s)`;
-                  _this.setAttribute("data-able", false);
-                } else {
-                  clearInterval(timer);
-                  this.sendTip = "发送验证码";
-                  _this.setAttribute("data-able", true);
-                }
-              }, 1000)
-            }
-            this.errtip = data.resMsg
+            let timeNum = 60;
+            var timer = setInterval(() => {
+              if (timeNum > 0) {
+                timeNum--;
+                this.sendTip = `( ${timeNum} s)`;
+                _this.setAttribute("data-able", false);
+              } else {
+                clearInterval(timer);
+                this.sendTip = "发送验证码";
+                _this.setAttribute("data-able", true);
+              }
+            }, 1000)
+            this.errtip = res.resMsg
           }).catch(err => {
-            this.errtip = '发送失败'
+            this.errtip = err
           })
         } else {
           this.errtip = loginFormatCheck(args)
@@ -79,23 +76,19 @@
         let _this = e.currentTarget,
           userAccount = this.rgstMail,
           mailCode = this.verCode;
-        let args = { "account": userAccount, "mailCode": mailCode },
-          url = this.serverUrl + "/api/user/registerFirst";
+        let args = { "account": userAccount, "mailCode": mailCode };
         if (loginFormatCheck(args) === true) {
-          http.post(url, {
+          user_rgstFirstStep({
             userAccount: userAccount,
             mailCode: mailCode,
             isForgetPwd: this.isForgetPwd
           }).then(res => {
-            let data = res.data;
-            if (data.resCode == 1) {
-              this.popSwitch("SetPwdCont")
-              this.saveRgstUser({ userAccount: userAccount })
-            }
-            this.errtip = data.resMsg
+            this.popSwitch("SetPwdCont")
+            this.saveRgstUser({ userAccount: userAccount })
+            this.errtip = res.resMsg
           }).catch(err => {
             console.log(err)
-            this.errtip = '出错咯'
+            this.errtip = err
           })
         } else {
           this.errtip = loginFormatCheck(args)
@@ -104,9 +97,6 @@
       loginPopEmit() {
         this.popSwitch("LoginCont")
       },
-    },
-    props: {
-
     }
   }
 </script>

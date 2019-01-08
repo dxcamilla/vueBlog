@@ -38,8 +38,6 @@
     computed: {
       ...mapState(['loginTip', 'loginUser', 'isLogin'])
     },
-
-
     methods: {
       ...mapMutations([
         'popSwitch',
@@ -62,7 +60,6 @@
       resetPwd() {
         this.popSwitch("RgstCont")
         this.rgstOrForgetPwd(true)
-
       }
     }
   }
