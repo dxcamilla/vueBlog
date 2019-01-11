@@ -1,7 +1,7 @@
 <template>
-  <div class="pdt-60">
+  <div class="pdt-60 admin-box">
     <Header />
-    <el-container style="height:600px;">
+    <el-container>
       <el-aside width="200px">
         <el-menu :default-openeds="['3']" v-for="sideItem of navItems" :key="sideItem.index">
           <sideBar :item="sideItem" />
@@ -20,15 +20,10 @@
     name: 'adminPage',
     components: {
       Header,
-      // usersCont,
-      // categoryCont,
-      // contentCont,
-      // addContent
       sideBar
     },
     data() {
       return {
-        // serverUrl: process.env.VUE_APP_serverURL,
         navItems: [
           {
             index: "1",
@@ -49,10 +44,11 @@
             children: [{
               index: "3-1",
               link: 'contentCont',
-              name: "123"
+              name: "内容列表"
             }, {
               index: "3-2",
-              name: "456"
+              link: 'addContent',
+              name: "添加内容"
             },
             ]
           },
@@ -94,6 +90,11 @@
   .el-pagination {
     margin-left: -5px;
     padding: 20px 0;
+  }
+
+  .admin-box .el-button {
+    margin-left: 0;
+    margin-right: 10px;
   }
 
   .el-tag {

@@ -91,7 +91,7 @@
         this.showLogin(false)
       },
       logoutFun() {
-        cookie.setCookie('loginToken', '')
+        cookie.delCookie('loginToken')
         this.saveLoginUser({
           token: '',
           user: '',

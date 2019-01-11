@@ -1,5 +1,6 @@
 import axios from 'axios'
 import cookie from '@/assets/js/cookie.js'
+import { Message } from 'element-ui'
 const getToken = () => {
   return cookie.getCookie('loginToken') || '';
 }
@@ -18,6 +19,7 @@ http.interceptors.response.use(res => {
   const data = res.data;
   if (data.resCode !== 1) {
     console.log(data);
+    // Message.error({ message: data.resMsg });
     return Promise.reject(data.resMsg);
   }
   return data;

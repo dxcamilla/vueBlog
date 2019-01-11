@@ -21,20 +21,20 @@
     </el-table>
 
     <el-dialog :title="addCateTitle" :visible.sync="dialogEditCate">
-      <el-form :model="rowEdit">
+      <el-form :model="editRow">
         <el-form-item label="分类名称" :label-width="formLabelWidth">
-          <el-input v-model="rowEdit.name" autocomplete="off"></el-input>
+          <el-input v-model="editRow.name" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogEditCate = false">取 消</el-button>
-        <el-button v-if="rowEdit.id" type="primary" @click="changeCate">修 改</el-button>
+        <el-button v-if="editRow.id" type="primary" @click="changeCate">修 改</el-button>
         <el-button v-else type="primary" @click="addCate">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="删除提示" :visible.sync="dialogDelCate" width="30%" center>
       <div style="color:#F56C6C">确定删除以下分类？</div>
-      <ul v-for='(item,index) in delCateName'>
+      <ul v-for='(item,index) in delRow.name'>
         <li>
           <el-tag>{{item}}</el-tag>
         </li>
@@ -47,7 +47,6 @@
   </el-main>
 </template>
 <script>
-  import http from '@/api/http.js'
   import {
     admin_categoryManage,
     admin_delCategory,
@@ -61,13 +60,16 @@
     data() {
       return {
         tableData: [],
-        delIds: [],
-        delCateName: [],
         dialogEditCate: false,
         dialogDelCate: false,
         addCateTitle: '添加分类',
         changeId: '',
-        rowEdit: {
+        multiDel: false,
+        delRow: {
+          id: [],
+          name: []
+        },
+        editRow: {
           id: '',
           name: ''
         },
@@ -92,8 +94,11 @@
           arr.push(val[index]._id)
           arrName.push(val[index].category)
         }
-        this.delIds = arr
-        this.delCateName = arrName
+        this.multiDel = true;
+        this.delRow = {
+          id: arr,
+          name: arrName
+        };
       },
 
       // 弹出添加/修改分类弹框
@@ -103,13 +108,13 @@
         console.log(cateId)
         if (cateId) {
           this.addCateTitle = '修改分类'
-          this.rowEdit = {
+          this.editRow = {
             id: cateId,
             name: cateName
           }
         } else {
           this.addCateTitle = '添加分类'
-          this.rowEdit = {
+          this.editRow = {
             id: '',
             name: ''
           }
@@ -118,14 +123,14 @@
       },
       // 添加分类
       addCate() {
-        if (!this.rowEdit.name) {
+        if (!this.editRow.name) {
           this.$message({
             message: '木有分类名',
             type: 'warning'
           });
           return
         }
-        let name = this.rowEdit.name
+        let name = this.editRow.name
         console.log(name);
         admin_addCategory({
           params: {
@@ -148,8 +153,8 @@
       changeCate() {
         admin_changeCategory({
           params: {
-            cateId: this.rowEdit.id,
-            cateName: this.rowEdit.name
+            cateId: this.editRow.id,
+            cateName: this.editRow.name
           }
         })
           .then(res => {
@@ -165,27 +170,29 @@
       },
       // 删除弹框
       delCatePop(row) {
-        const cateId = row._id;
-        if (cateId) {
-          this.delIds = cateId
-          this.delCateName = [];
-          this.delCateName.push(row.category);
-        }
-        if (this.delIds.length === 0) {
-          this.$message({
-            message: '没选删个屁？',
-            type: 'warning'
-          });
-          return
+        if (row._id) {
+          this.multiDel = false;
+          this.delRow = {
+            id: [row._id],
+            name: [row.category]
+          }
+        } else {
+          if (this.delRow.id.length === 0 || !this.multiDel) {
+            this.$message({
+              message: '没选删个屁？',
+              type: 'warning'
+            });
+            return
+          }
         }
         this.dialogDelCate = true
       },
       // 删除分类
       delCate() {
-        console.log("cateIds", this.delIds)
+        console.log("cateIds", this.delRow.id)
         admin_delCategory({
           params: {
-            cateIds: this.delIds
+            cateIds: this.delRow.id
           }
         })
           .then(res => {
@@ -193,6 +200,10 @@
               message: '删除成功',
               type: 'success'
             });
+            this.delRow = {
+              id: [],
+              name: []
+            }
             this.queryInit()
             this.dialogDelCate = false;
 

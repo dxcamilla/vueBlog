@@ -6,7 +6,7 @@ import admin from '../views/Layout/admin'
 import usersCont from '@/views/Layout/adminTemp/usersCont.vue'
 import categoryCont from '@/views/Layout/adminTemp/categoryCont.vue'
 import contentCont from '@/views/Layout/adminTemp/contentCont.vue'
-
+import addContent from '@/views/Layout/adminTemp/addContent.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -43,6 +43,11 @@ export default new Router({
           path: 'contentCont',
           name: 'contentCont',
           component: contentCont
+        },
+        {
+          path: 'addContent',
+          name: 'addContent',
+          component: addContent
         },
       ]
     },

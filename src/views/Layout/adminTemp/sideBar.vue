@@ -7,7 +7,6 @@
       </template>
       <sideBar v-for="subItem of item.children" :item="subItem" :key="subItem.name"></sideBar>
     </el-submenu>
-
     <el-menu-item v-else :index="item.index">
       <template slot="title">
         <router-link :to="{name:item.link}">
@@ -15,9 +14,7 @@
           {{item.name}}
         </router-link>
       </template>
-
     </el-menu-item>
-
   </div>
 </template>
 <script>
