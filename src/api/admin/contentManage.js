@@ -8,14 +8,12 @@ const admin_delContent = params => {
   const url = rootPath + '/admin/delContent'
   return http.get(url, params)
 }
-
-
-const admin_changeUserInfo = userIds => {
-  const url = rootPath + '/admin/changeUserInfo'
-  return http.get(url, userIds)
+const admin_addContent = params => {
+  const url = rootPath + '/admin/editableContent'
+  return http.get(url, params)
 }
-const admin_setAdmin = userIds => {
-  const url = rootPath + '/admin/setAdmin'
-  return http.get(url, userIds)
+const admin_creatContent = params => {
+  const url = rootPath + '/admin/addContent'
+  return http.get(url, params)
 }
-export { admin_contentManage, admin_delContent }
+export { admin_contentManage, admin_delContent, admin_addContent, admin_creatContent }

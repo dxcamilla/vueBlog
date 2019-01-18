@@ -1,79 +1,153 @@
 <template>
   <el-main>
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="标题">
+        <el-input v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item label="活动区域">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+      <el-form-item label="分类">
+        <el-select v-model="form.checkCate" placeholder="请选择分类">
+          <el-option v-for="item in form.categories" :key="item._id.toString()" :label="item.category" :value="item.category"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
+      <el-form-item label="置顶">
+        <el-radio-group v-model="form.stick">
+          <el-radio :label="0"></el-radio>
+          <el-radio :label="1"></el-radio>
+          <el-radio :label="2"></el-radio>
+          <el-radio :label="3"></el-radio>
         </el-radio-group>
+        <span style="margin-left:20px;color:red;">默认0，不置顶，递增置顶</span>
       </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-form-item label="标签">
+        <el-select v-model="form.autoTags" multiple filterable allow-create default-first-option placeholder="请选择文章标签">
+          <el-option v-for="item in form.tags" :key="item._id.toString()" :label="item.tag" :value="item.tag">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="摘要">
+        <el-input type="textarea" v-model="form.summary"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input class="txtarea-cont" type="textarea" v-model="form.content"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">立即创建</el-button>
+        <el-button type="primary" @click="addContentPop">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
+
+    <el-dialog title="提示" :visible.sync="dialogEdit" width="30%" center>
+      <div>确认创建文章？</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogEdit = false">取 消</el-button>
+        <el-button type="primary" @click="editContent">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-main>
 </template>
 <style>
 
 </style>
 <script>
-  import http from '@/api/http.js'
+  import {
+    admin_addContent,
+    admin_creatContent,
+    admin_updateContent
+  } from '@/api/admin/contentManage';
   export default {
     name: 'usersCont',
     components: {
     },
     data() {
       return {
-        serverUrl: process.env.VUE_APP_serverURL,
+        dialogEdit: false,
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
+          title: '',
+          categories: '',
+          stick: 0,
+          tags: [],
+          summary: '',
+          content: '',
+          checkCate: [],
+          checkTag: [],
+        },
+
       }
     },
     mounted() {
+      this.loadCont();
     },
     methods: {
-
+      // markInit() {
+      //   let showdown = require('showdown');
+      //   let coverter = new showdown.Converter();
+      //   this.converter = coverter
+      // },
+      // contentChanged() {
+      //   let html = this.converter.makeHtml(this.content);
+      //   document.getElementById('show-content').innerHTML = html;
+      // },
+      loadCont() {
+        admin_addContent()
+          .then(res => {
+            this.form.categories = res.categories;
+            this.form.tags = res.tags;
+          })
+      },
+      addContentPop() {
+        const emptyVerArr = [
+          {
+            key: this.form.title,
+            tip: '标题不能为空'
+          },
+          {
+            key: this.form.checkCate,
+            tip: '请选择分类'
+          },
+          {
+            key: this.form.summary,
+            tip: '麻烦写下摘要'
+          },
+          {
+            key: this.form.content,
+            tip: '内容也不能空'
+          }
+        ]
+        for (let item of emptyVerArr) {
+          if (item.key === "") {
+            this.$message({
+              message: item.tip,
+              type: 'warning'
+            });
+            return;
+          }
+        }
+        this.dialogEdit = true;
+      },
+      editContent() {
+        admin_creatContent({
+          params: {
+            contType: this.form.checkCate,
+            contTitle: this.form.title,
+            contSummary: this.form.summary,
+            contBody: this.form.content,
+            tags: this.form.checkTag,
+            stick: this.form.stick
+          }
+        }).then(res => {
+          this.$message({
+            message: res.resMsg,
+            type: 'success'
+          });
+        }).catch(err => {
+          this.$message.error(err)
+        })
+      }
     },
   };
 </script>
+<style scope="scope">
+  .txtarea-cont textarea {
+    min-height: 200px !important;
+  }
+</style>

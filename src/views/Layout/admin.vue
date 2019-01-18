@@ -3,7 +3,7 @@
     <Header />
     <el-container>
       <el-aside width="200px">
-        <el-menu :default-openeds="['3']" v-for="sideItem of navItems" :key="sideItem.index">
+        <el-menu :default-openeds="['contents']" v-for="sideItem of navItems" :key="sideItem.index">
           <sideBar :item="sideItem" />
         </el-menu>
       </el-aside>
@@ -26,27 +26,33 @@
       return {
         navItems: [
           {
-            index: "1",
+            index: "users",
             link: 'usersCont',
             name: "用户管理",
             iconClass: "icon-user"
           },
           {
-            index: "2",
+            index: "categories",
             link: 'categoryCont',
-            name: "标签管理",
-            iconClass: "el-icon-circle-plus"
+            name: "分类管理",
+            iconClass: "icon-list-ol"
           },
           {
-            index: "3",
+            index: "tags",
+            link: 'tagCont',
+            name: "标签管理",
+            iconClass: "icon-tag"
+          },
+          {
+            index: "contents",
             name: "内容管理",
-            iconClass: "el-icon-edit-outline",
+            iconClass: "el-icon-edit",
             children: [{
-              index: "3-1",
+              index: "showCont",
               link: 'contentCont',
               name: "内容列表"
             }, {
-              index: "3-2",
+              index: "addCont",
               link: 'addContent',
               name: "添加内容"
             },

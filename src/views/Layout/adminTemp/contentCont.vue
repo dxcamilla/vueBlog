@@ -26,6 +26,8 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="totalLists" @current-change="handleCurrentChange">
+    </el-pagination>
     <el-dialog title="删除提示" :visible.sync="dialogDel" width="30%" center>
       <div style="color:#F56C6C">确定删除以下文章？</div>
       <ul v-for='(item,index) in delRow.name'>
@@ -52,6 +54,9 @@
     },
     data() {
       return {
+        totalLists: 0,
+        pageSize: 0,
+        curPgae: 1,
         tableData: [],
         delRow: {
           id: [],
@@ -64,13 +69,19 @@
       }
     },
     mounted() {
-      this.queryInit()
+      this.queryInit(this.curPage)
     },
     methods: {
-      queryInit() {
-        admin_contentManage()
+      queryInit(pageNum) {
+        admin_contentManage({
+          params: {
+            page: pageNum
+          }
+        })
           .then(res => {
-            this.tableData = res.data
+            this.tableData = res.data;
+            this.totalLists = res.total;
+            this.pageSize = res.limit;
             console.log(this.tableData)
           }).catch(err => {
             this.$message.error(err)
@@ -114,23 +125,24 @@
           }
         })
           .then(res => {
-            if (res.resCode === 1) {
-              this.$message({
-                message: res.resMsg,
-                type: 'success'
-              });
-              this.delRow = {
-                id: [],
-                name: []
-              }
-              this.queryInit()
-              this.dialogDel = false;
-            } else {
-              this.$message.error(res.resMsg);
+            this.$message({
+              message: res.resMsg,
+              type: 'success'
+            });
+            this.delRow = {
+              id: [],
+              name: []
             }
+            this.queryInit(this.curPage)
+            this.dialogDel = false;
           }).catch(err => {
             this.$message.error(err)
           })
+      },
+      // 分页查询
+      handleCurrentChange(val) {
+        this.curPage = val;
+        this.queryInit(this.curPage);
       },
     },
   };

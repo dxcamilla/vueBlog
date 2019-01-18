@@ -5,8 +5,10 @@ import About from '../views/About'
 import admin from '../views/Layout/admin'
 import usersCont from '@/views/Layout/adminTemp/usersCont.vue'
 import categoryCont from '@/views/Layout/adminTemp/categoryCont.vue'
+import tagCont from '@/views/Layout/adminTemp/tagCont.vue'
 import contentCont from '@/views/Layout/adminTemp/contentCont.vue'
 import addContent from '@/views/Layout/adminTemp/addContent.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +40,11 @@ export default new Router({
           path: 'categoryCont',
           name: 'categoryCont',
           component: categoryCont
+        },
+        {
+          path: 'tagCont',
+          name: 'tagCont',
+          component: tagCont
         },
         {
           path: 'contentCont',
