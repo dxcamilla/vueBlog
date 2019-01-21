@@ -74,7 +74,7 @@
   // @ is an alias to /src
   import Header from '@/components/Header.vue'
   import bubble from '@/assets/js/bubble.js'
-  import { api_new_content } from '@/api/index'
+  import { api_home } from '@/api/index'
   export default {
     data() {
       return {
@@ -91,8 +91,7 @@
     },
     methods: {
       searchContent() {
-        api_new_content().then(res => {
-          console.log(res)
+        api_home().then(res => {
           this.Content = res.content
         })
       },

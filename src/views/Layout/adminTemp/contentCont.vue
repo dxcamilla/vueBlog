@@ -21,7 +21,12 @@
       <el-table-column prop="act" label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click="delContPop(scope.row)">删除</el-button>
-          <el-button type="text">编辑</el-button>
+          <router-link :to="{path: '/detail', query: {contId: scope.row._id}}">
+            <el-button type="text">预览</el-button>
+          </router-link>
+          <router-link :to="{path: '/admin/addContent', query:{contId: scope.row._id}}">
+            <el-button type="text">编辑</el-button>
+          </router-link>
           <el-button type="text">上线</el-button>
         </template>
       </el-table-column>

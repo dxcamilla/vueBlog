@@ -3,8 +3,10 @@
     <Header />
     <el-container>
       <el-aside width="200px">
-        <el-menu :default-openeds="['contents']" v-for="sideItem of navItems" :key="sideItem.index">
-          <sideBar :item="sideItem" />
+        <el-menu :default-openeds="['contents']">
+          <template v-for="sideItem of navItems">
+            <sideBar :item="sideItem" />
+          </template>
         </el-menu>
       </el-aside>
       <el-container>
@@ -35,7 +37,7 @@
             index: "categories",
             link: 'categoryCont',
             name: "分类管理",
-            iconClass: "icon-list-ol"
+            iconClass: "icon-list"
           },
           {
             index: "tags",
@@ -115,6 +117,8 @@
 
 
   .el-aside {
+    overflow: hidden;
+    border-right: 1px solid #ddd;
     color: #333;
   }
 
@@ -126,4 +130,16 @@
     width: 200px;
     margin-right: 10px;
   }
+
+  .el-menu {
+    border: none;
+  }
+
+  /* .admin-box .common-header {
+    background: #edf5ff;
+  }
+
+  .admin-box .cm-navbar .list {
+    color: #000;
+  } */
 </style>

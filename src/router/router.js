@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About'
+import Detail from '../views/Detail'
 import admin from '../views/Layout/admin'
 import usersCont from '@/views/Layout/adminTemp/usersCont.vue'
 import categoryCont from '@/views/Layout/adminTemp/categoryCont.vue'
@@ -24,6 +25,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: Detail
     },
     {
       path: '/admin',

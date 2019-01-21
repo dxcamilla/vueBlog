@@ -25,3 +25,19 @@
     }
   }
 </script>
+<style>
+  .menu-iconfont {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .el-menu-item.is-active a,
+  .el-menu-item.is-active i {
+    color: #0099ff !important;
+  }
+</style>

@@ -16,4 +16,8 @@ const admin_creatContent = params => {
   const url = rootPath + '/admin/addContent'
   return http.get(url, params)
 }
-export { admin_contentManage, admin_delContent, admin_addContent, admin_creatContent }
+const admin_updateContent = params => {
+  const url = rootPath + '/admin/changeContent'
+  return http.get(url, params)
+}
+export { admin_contentManage, admin_delContent, admin_addContent, admin_creatContent, admin_updateContent }
