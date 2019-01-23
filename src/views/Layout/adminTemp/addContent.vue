@@ -10,12 +10,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="置顶">
-        <el-radio-group v-model="form.stick">
-          <el-radio :label="0"></el-radio>
-          <el-radio :label="1"></el-radio>
-          <el-radio :label="2"></el-radio>
-          <el-radio :label="3"></el-radio>
-        </el-radio-group>
+        <el-input-number v-model="form.stick" size="medium" :min="0" :max="999" label="置顶等级"></el-input-number>
         <span style="margin-left:20px;color:red;">默认0，不置顶，递增置顶</span>
       </el-form-item>
       <el-form-item label="标签">
@@ -35,15 +30,15 @@
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
-    <el-dialog title="提示" :visible.sync="dialogEdit" width="30%" center>
+    <el-dialog title="提示" :visible.sync="dialogEdit" width="30%">
       <div>确认创建文章？</div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogEdit = false">取 消</el-button>
-        <el-button type="primary" @click="editContent" :disabled="createDisable">创建并上线</el-button>
-        <el-button type="primary" @click="editContent" :disabled="createDisable">创建</el-button>
+        <el-button type="primary" @click="creatContent('launch')" :disabled="createDisable">创建并上线</el-button>
+        <el-button type="primary" @click="creatContent('save')" :disabled="createDisable">创建</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="提示" :visible.sync="dialogUpdate" width="30%" center>
+    <el-dialog title="提示" :visible.sync="dialogUpdate" width="30%">
       <div>确认更新文章？</div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogUpdate = false">取 消</el-button>
@@ -52,9 +47,6 @@
     </el-dialog>
   </el-main>
 </template>
-<style>
-
-</style>
 <script>
   import {
     admin_addContent,
@@ -90,15 +82,7 @@
       this.loadCont();
     },
     methods: {
-      // markInit() {
-      //   let showdown = require('showdown');
-      //   let coverter = new showdown.Converter();
-      //   this.converter = coverter
-      // },
-      // contentChanged() {
-      //   let html = this.converter.makeHtml(this.content);
-      //   document.getElementById('show-content').innerHTML = html;
-      // },
+      //页面初始加载，如果是编辑，加载content，如果是新增，加载标签和分类
       loadCont() {
         this.updateId = this.$route.query.contId;
         if (this.updateId) {
@@ -123,7 +107,8 @@
             this.form.tags = res.tags;
           })
       },
-      addContentPop() {
+      // 点击“立即创建/更新”弹框
+      addContentPop(type) {
         const emptyVerArr = [
           {
             key: this.form.title,
@@ -156,22 +141,31 @@
         } else {
           this.dialogEdit = true;
         }
-
       },
-      editContent() {
+      //创建新blog
+      creatContent(type) {
         this.createDisable = true;
         setTimeout(() => {
           this.createDisable = false;
         }, 2000)
+        let status = {};
+        if (type === 'save') {
+          status = 0
+        } else if (type === 'launch') {
+          status = 1
+        }
+        let urlParams = {
+          contType: this.form.checkCate,
+          contTitle: this.form.title,
+          contSummary: this.form.summary,
+          contBody: this.form.content,
+          tags: this.form.checkTag,
+          creator: this.$store.state.loginUser.userAccount,
+          stick: parseInt(this.form.stick),
+          pulishStatus: status
+        }
         admin_creatContent({
-          params: {
-            contType: this.form.checkCate,
-            contTitle: this.form.title,
-            contSummary: this.form.summary,
-            contBody: this.form.content,
-            tags: this.form.checkTag,
-            stick: this.form.stick
-          }
+          params: urlParams
         }).then(res => {
           this.$message({
             message: res.resMsg,
@@ -182,11 +176,13 @@
           this.$message.error(err)
         })
       },
+      //修改blog
       updateContent() {
         this.updateDisable = true;
         setTimeout(() => {
           this.updateDisable = false;
         }, 2000)
+
         admin_updateContent({
           params: {
             contId: this.updateId,
@@ -195,7 +191,8 @@
             contSummary: this.form.summary,
             contBody: this.form.content,
             tags: this.form.checkTag,
-            stick: this.form.stick
+            stick: this.form.stick,
+            updater: this.$store.state.loginUser.userAccount
           }
         }).then(res => {
           this.$message({

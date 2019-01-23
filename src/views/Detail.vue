@@ -51,9 +51,11 @@
     </div>
   </div>
 </template>
+<style scoped src="../assets/css/detail.css">
+  /* @import '../assets/css/detail.css'; */
+</style>
 <script>
   import Header from '@/components/Header.vue';
-  import '@/assets/css/detail.css';
   import { api_detail } from '@/api/index';
   export default {
     name: 'detail',
@@ -63,31 +65,19 @@
     data() {
       return {
         contId: '',
-        content: {
-
-        },
-        coverter: null
+        content: {},
+        coverter: ''
       }
     },
     mounted() {
       this.pageInit()
     },
     methods: {
-      // markInit() {
-      //   let showdown = require('showdown');
-      //   let coverter = new showdown.Converter();
-      //   this.converter = coverter
-      // },
-      // contentChanged() {
-
-      // },
       pageInit() {
         let showdown = require('showdown');
         let coverter = new showdown.Converter();
         this.converter = coverter;
-
         this.contId = this.$route.query.contId;
-        console.log(this.contId);
         api_detail({
           params: {
             contId: this.contId
@@ -101,7 +91,7 @@
         }).catch(err => {
           this.$message.error(err)
         })
-      }
+      },
     }
   }
 </script>

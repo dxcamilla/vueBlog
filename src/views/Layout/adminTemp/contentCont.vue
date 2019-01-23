@@ -10,16 +10,35 @@
       </router-link>
     </el-row>
     <el-table border style="width:100%" :data="tableData" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="_id" label="id" width="200"></el-table-column>
-      <el-table-column prop="categoryId.category" label="分类"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="stick" label="置顶"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间"></el-table-column>
-      <el-table-column prop="publishTime" label="发布时间"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column type="selection" width="40"></el-table-column>
+      <!-- <el-table-column prop="_id" label="id" width="200"></el-table-column> -->
+      <el-table-column prop="title" label="标题" width="200">
+        <template slot-scope="scope">
+          <router-link :to="{path: '/admin/showContent', query:{contId: scope.row._id}}">{{scope.row.title}}</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="categoryId.category" label="分类" width="80"></el-table-column>
+
+      <el-table-column prop="stick" label="置顶等级" width="80"></el-table-column>
+      <el-table-column prop="creator" label="作者" width="150"></el-table-column>
+      <el-table-column prop="updater" label="更新者" width="150"></el-table-column>
+      <!-- <el-table-column prop="createTime" label="创建时间"></el-table-column> -->
+      <!-- <el-table-column prop="publishTime" label="发布时间"></el-table-column> -->
+      <el-table-column prop="status" label="状态">
+        <template slot-scope="scope">
+          <template v-if="scope.row.status===0">未发布</template>
+          <template v-if="scope.row.status===1">已发布</template>
+          <template v-if="scope.row.status===2">已下线</template>
+        </template>
+      </el-table-column>
       <el-table-column prop="act" label="操作">
         <template slot-scope="scope">
+          <template v-if="scope.row.status===0 || scope.row.status===2">
+            <el-button type="text">上线</el-button>
+          </template>
+          <template v-if="scope.row.status===1">
+            <el-button type="text">下线</el-button>
+          </template>
           <el-button type="text" @click="delContPop(scope.row)">删除</el-button>
           <router-link :to="{path: '/detail', query: {contId: scope.row._id}}">
             <el-button type="text">预览</el-button>
@@ -27,7 +46,7 @@
           <router-link :to="{path: '/admin/addContent', query:{contId: scope.row._id}}">
             <el-button type="text">编辑</el-button>
           </router-link>
-          <el-button type="text">上线</el-button>
+
         </template>
       </el-table-column>
     </el-table>

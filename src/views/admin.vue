@@ -17,7 +17,7 @@
 </template>
 <script>
   import Header from '@/components/Header.vue'
-  import sideBar from '@/views/Layout/adminTemp/sideBar.vue'
+  import sideBar from '@/components/sideBar.vue'
   export default {
     name: 'adminPage',
     components: {
