@@ -7,7 +7,7 @@
         <div class="bloginfo">
           <ul>
             <li class="timer"><i class="icon-time"></i> {{content.publishTime}}</li>
-            <li class="view"><i class="icon-eye-open"></i> 2018-07-15</li>
+            <li class="view"><i class="icon-eye-open"></i> 123</li>
             <li class="view"><i class="icon-list"></i> {{content.cateName}}</li>
             <li class="like"><i class="icon-star-empty"></i> <i class="icon-star"></i> 0</li>
           </ul>

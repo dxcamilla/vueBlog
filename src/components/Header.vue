@@ -5,7 +5,7 @@
         <router-link to="/">
           <div class="list cur">主页</div>
         </router-link>
-        <router-link to="/home">
+        <router-link to="/categories">
           <div class="list">分类</div>
         </router-link>
         <router-link to="/about">
@@ -14,12 +14,15 @@
       </div>
       <a v-if="!isLogin" href="javascript:;" class="login-btn j_login-btn" @click="loginPop">登录</a>
       <div v-else class="userInfo-entry-wrap">
-        <div class="user-header" style='background-image:url("/img/by_bg.jpg")' id='userInfoPopBtn'></div>
+        <div class="user-header"
+          style='background-image:url(https://image.pearvideo.com/main/20190222/10406311-160816-1.png)'
+          id='userInfoPopBtn'></div>
         <div class="user-info-pop wap-hide" id="userInfoPop">
           <div class="user-pop-inner">
             <i class="icon close-icon"></i>
             <div class="pop-top">
-              <div class="user-header hd2" style="background-image:url(/img/by_bg.jpg)"></div>
+              <div class="user-header hd2"
+                style="background-image:url(https://image.pearvideo.com/main/20190222/10406311-160816-1.png)"></div>
               <h3 class="user-name">{{loginUser.userName}}</h3>
             </div>
             <div class="info-lists">

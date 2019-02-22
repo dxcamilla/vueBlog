@@ -1,7 +1,5 @@
 
 body {
-    font: 16px "Microsoft YaHei", Arial, Helvetica, sans-serif;
-    color: #555;
     background-color: #f6f6f6;
     line-height: 1.5;
 }
@@ -32,12 +30,11 @@ h1.t-nav { border-bottom: #bfbfbf 1px solid; font-size: 14px; font-weight: norma
 .bloginfo ul li a { color: #748594; }
 .bloginfo ul li a:hover { color: #000 }
 .news-about {
-    color: #888888;
-    border: 1px solid #F3F3F3;
+    color: #666;
     padding: 10px;
     margin: 20px auto 15px auto;
     line-height: 23px;
-    background: none repeat 0 0 #F6F6F6;
+    background: none repeat 0 0 rgba(253, 71, 51, .1);
 }
 .news-about strong {
     color: #38485A;
@@ -50,6 +47,7 @@ h1.t-nav { border-bottom: #bfbfbf 1px solid; font-size: 14px; font-weight: norma
     font-size: 16px;
     text-align: justify;
 }
+
 .detail-cont-box .news-con p {
     margin-bottom: 25px;
 }

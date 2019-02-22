@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <el-main class="content-detail-box">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="标题">
         <el-input v-model="form.title"></el-input>
@@ -210,5 +210,9 @@
 <style scope="scope">
   .txtarea-cont textarea {
     min-height: 200px !important;
+  }
+
+  .el-input {
+    width: 100%;
   }
 </style>
