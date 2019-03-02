@@ -13,71 +13,76 @@ import addContent from '@/views/Layout/adminTemp/addContent.vue'
 import showContent from '@/views/Layout/adminTemp/showContent.vue'
 
 Vue.use(Router)
+export const staticRouterMap = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/detail',
+    name: 'detail',
+    component: Detail
+  },
+  {
+    path: '/categories',
+    // redirect: '/categories',
+    name: 'categories',
+    component: Categories
+  },
 
+  {
+    path: '/admin',
+    redirect: '/admin/usersCont',
+    name: 'admin',
+    component: admin,
+    children: [
+      {
+        path: 'usersCont',
+        name: 'usersCont',
+        component: usersCont
+      },
+      {
+        path: 'categoryCont',
+        name: 'categoryCont',
+        component: categoryCont
+      },
+      {
+        path: 'tagCont',
+        name: 'tagCont',
+        component: tagCont
+      },
+      {
+        path: 'contentCont',
+        name: 'contentCont',
+        component: contentCont
+      },
+      {
+        path: 'addContent',
+        name: 'addContent',
+        component: addContent
+      },
+      {
+        path: 'showContent',
+        name: 'showContent',
+        component: showContent
+      },
+
+    ]
+  },
+]
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
-    {
-      path: '/detail',
-      name: 'detail',
-      component: Detail
-    },
-    {
-      path: '/categories',
-      // redirect: '/categories',
-      name: 'categories',
-      component: Categories
-    },
-
-    {
-      path: '/admin',
-      redirect: '/admin/usersCont',
-      name: 'admin',
-      component: admin,
-      children: [
-        {
-          path: 'usersCont',
-          name: 'usersCont',
-          component: usersCont
-        },
-        {
-          path: 'categoryCont',
-          name: 'categoryCont',
-          component: categoryCont
-        },
-        {
-          path: 'tagCont',
-          name: 'tagCont',
-          component: tagCont
-        },
-        {
-          path: 'contentCont',
-          name: 'contentCont',
-          component: contentCont
-        },
-        {
-          path: 'addContent',
-          name: 'addContent',
-          component: addContent
-        },
-        {
-          path: 'showContent',
-          name: 'showContent',
-          component: showContent
-        },
-
-      ]
-    },
-  ]
+  routes: staticRouterMap
 })
+// export const asyncRouterMap = [
+//   {
+//     path: ''
+//   }
+// ]

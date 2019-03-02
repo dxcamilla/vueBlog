@@ -13,7 +13,8 @@ export default new Vuex.Store({
     rgstUser: {},
     loginTip: '',
     isForgetPwd: false,
-    token: ''
+    token: '',
+    userHd: ''
   },
   mutations: {
     // 突变就是定义方法，第一个参数是state,第二个参数是载荷

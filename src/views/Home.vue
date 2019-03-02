@@ -22,10 +22,10 @@
       </nav>
       <!-- <a href="javascript:;" class="login-btn j_login-btn" @click="">登录</a> -->
       <canvas id="bubbleCanvas"></canvas>
-      <div class="sign-me" style='background-image:url("/img/dxLogo_w.png")'></div>
+      <div class="sign-me" style='background-image:url(../../assets/img/dxLogo_w.png)'></div>
       <a href="javascript:;" class="r-r-btn blogger-resume-btn">下载博主简历</a>
       <div class="blogger-hd">
-        <div class="img" style="background-image:url(/img/by_bg.jpg)"></div>
+        <div class="img" :style='myImgBg'></div>
       </div>
     </header>
     <!-- <homeCont :Content="Content" /> -->
@@ -90,14 +90,22 @@
         hbShow: false,
         stickCont: {},
         lastCont: {},
-        Content: []
+        Content: [],
+        myImgBg: ''
       }
     },
     mounted() {
+
       bubble();
-      this.searchContent()
+      this.searchContent();
+      this.aa();
+
     },
     methods: {
+      aa() {
+        const imgSrc = require('@/assets/img/me' + Math.ceil(Math.random() * 4) + '.jpg');
+        this.myImgBg = 'background-image:url(' + imgSrc + ')';
+      },
       searchContent() {
         api_home().then(res => {
           console.log(res)

@@ -62,6 +62,16 @@
     components: {
       Header
     },
+    metaInfo: {
+      title: 'this.content.title', // set a title
+      meta: [{ // set meta
+        name: 'keyWords',
+        content: "文字=在v大撒法定时"
+      }, {
+        name: 'Description',
+        content: 'this.content.summary'
+      }]
+    },
     data() {
       return {
         contId: '',
