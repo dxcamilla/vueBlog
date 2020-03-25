@@ -7,10 +7,7 @@
 <script>
   export default {
     name: 'showForm',
-    props: {
-      fLabel: String,
-      fValue: String
-    }
+    props: ['fLabel', 'fValue']
   }
 </script>
 <style lang="scss">

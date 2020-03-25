@@ -14,7 +14,8 @@
       <!-- <el-table-column prop="_id" label="id" width="200"></el-table-column> -->
       <el-table-column prop="title" label="标题" width="200">
         <template slot-scope="scope">
-          <router-link :to="{path: '/admin/showContent', query:{contId: scope.row._id}}">{{scope.row.title}}</router-link>
+          <router-link :to="{path: '/admin/showContent', query:{contId: scope.row._id}}">{{scope.row.title}}
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column prop="categoryId.category" label="分类" width="80"></el-table-column>
@@ -40,7 +41,7 @@
             <el-button type="text">下线</el-button>
           </template>
           <el-button type="text" @click="delContPop(scope.row)">删除</el-button>
-          <router-link :to="{path: '/detail', query: {contId: scope.row._id}}">
+          <router-link :to="{path: '/detail/' + scope.row._id}">
             <el-button type="text">预览</el-button>
           </router-link>
           <router-link :to="{path: '/admin/addContent', query:{contId: scope.row._id}}">
@@ -50,7 +51,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="totalLists" @current-change="handleCurrentChange">
+    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="totalLists"
+      @current-change="handleCurrentChange">
     </el-pagination>
     <el-dialog title="删除提示" :visible.sync="dialogDel" width="30%" center>
       <div style="color:#F56C6C">确定删除以下文章？</div>

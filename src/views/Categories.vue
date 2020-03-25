@@ -7,7 +7,7 @@
       <ul class="blog-lists">
         <li class="blog-card" v-for="content of contents">
           <div class="card-inner">
-            <router-link :to="{path: '/detail', query:{contId: content._id}}" class="tbl">
+            <router-link :to="{name: 'detail', params: {contId: content._id}}" class="tbl">
               <div class="cate-icon">
                 <span
                   style="background-image:url(https://image2.pearvideo.com/news/news-100000997-11828231.jpeg);"></span>
@@ -138,8 +138,6 @@
     }
 
     .tt-box {
-      /* display: table-cell; */
-
       margin-left: 160px;
       font-size: 18px;
       color: #333;
@@ -172,6 +170,43 @@
       }
     }
   }
+
+  @media only screen and (max-width:760px) {
+    .cate-main {
+      padding: 80px 0;
+    }
+
+    .blog-lists {
+      padding: 0;
+
+      .cate-icon {
+        margin-top: 8px;
+        width: 80px;
+
+        span {
+          width: 80px;
+          height: 80px;
+        }
+      }
+
+      .tt-box {
+        margin-left: 100px;
+
+        h2 {
+          height: 22px;
+          line-height: 22px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        p {
+          margin-top: 10px;
+          max-height: 60px;
+          -webkit-line-clamp: 3;
+        }
+      }
+    }
+  }
 </style>
 <script>
   import leftBar from "@/components/leftBar/leftBar"
@@ -187,36 +222,43 @@
       return {
         navItems: [],
         contents: [],
-        cateId: ''
+        cateIds: ''
       }
+    },
+    props: {
+      cateId: String
     },
 
     mounted() {
       this.pageInit()
     },
-    route: {
-      data({ to: { params: { cateId } } }) {
-        return Promise.all([
-          this.pageInit()
-        ]).then(() => {
-          console.log("update")
-        })
-      }
-    },
+    // route: {
+    //   data({ to: { params: { cateId } } }) {
+    //     return Promise.all([
+    //       this.pageInit()
+    //     ]).then(() => {
+    //       console.log("update")
+    //     })
+    //   }
+    // },
     methods: {
       pageInit() {
-        this.cateId = this.$route.query.cateId;
+        console.log(this.cateId)
+        if (this.cateId === "all") {
+          this.cateIds = '';
+        } else {
+          this.cateIds = this.cateId;
+        }
         api_category({
           params: {
-            cateId: this.cateId
+            cateId: this.cateIds
           }
         }).then(res => {
-          console.log(res)
           const cates = res.categories;
           let arr = [];
           cates.forEach((item, index) => {
             let objItem = {};
-            objItem.link = `categories?cateId=${item._id}`
+            objItem.link = `${item._id}`
             objItem.name = item.category;
             this.navItems.splice(index, 1, objItem);
           });

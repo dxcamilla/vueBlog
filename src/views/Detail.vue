@@ -62,19 +62,23 @@
     components: {
       Header
     },
-    metaInfo: {
-      title: 'this.content.title', // set a title
-      meta: [{ // set meta
-        name: 'keyWords',
-        content: "文字=在v大撒法定时"
-      }, {
-        name: 'Description',
-        content: 'this.content.summary'
-      }]
+    props: {
+      contId: String
+    },
+    metaInfo() {
+      return {
+        title: this.content.title, // set a title
+        meta: [{ // set meta
+          name: 'keyWords',
+          content: this.content.title + ' | ' + this.content.summary
+        }, {
+          name: 'Description',
+          content: this.content.summary
+        }]
+      }
     },
     data() {
       return {
-        contId: '',
         content: {},
         coverter: ''
       }
@@ -87,7 +91,6 @@
         let showdown = require('showdown');
         let coverter = new showdown.Converter();
         this.converter = coverter;
-        this.contId = this.$route.query.contId;
         api_detail({
           params: {
             contId: this.contId

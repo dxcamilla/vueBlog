@@ -5,7 +5,7 @@
         <router-link to="/">
           <div class="list cur">主页</div>
         </router-link>
-        <router-link to="/categories">
+        <router-link :to="{name:'categories',params:{cateId:'all'}}">
           <div class="list">分类</div>
         </router-link>
         <router-link to="/about">

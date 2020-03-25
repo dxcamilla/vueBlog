@@ -1,16 +1,16 @@
 <template>
   <aside class="left-bar">
-    <ul class="menu-ul">
-      <li class="side-list">
-        <router-link to="/categories">
+    <div class="menu-ul">
+      <router-link :to="{name:'categories',params:{cateId:'all'}}">
+        <div class="side-list">
           <div class="list-inner">
             <!-- <i class="all-icon"></i> -->
             全部
           </div>
-        </router-link>
-      </li>
+        </div>
+      </router-link>
       <cateList v-for="(sideItem,index) of navItems" :item="sideItem" :key="index" />
-    </ul>
+    </div>
   </aside>
 </template>
 <style lang="scss" scoped>
@@ -32,11 +32,27 @@
     margin-top: $m_top1;
   }
 
+
+
   @media screen and (min-width:1280px) {
     .left-bar {
       left: 50%;
       margin-left: -640px;
     }
+  }
+
+  @media screen and (max-width:760px) {
+    .left-bar {
+      display: none;
+      z-index: 9;
+      width: 100%;
+    }
+
+    /* .side-list,
+    .list-inner {
+      margin: 0;
+      text-align: center
+    } */
   }
 </style>
 <script>

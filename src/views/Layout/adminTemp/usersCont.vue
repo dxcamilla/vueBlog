@@ -6,7 +6,8 @@
       <el-button type="primary" icon="el-icon-search" plain>搜索</el-button>
       <el-button type="danger" icon="el-icon-delete" plain @click="delPop">批量删除</el-button>
     </el-row>
-    <el-table ref="multipleTable" :border="true" syle="width:100%" :data="tableData" @selection-change="handleSelectionChange">
+    <el-table ref="multipleTable" :border="true" syle="width:100%" :data="tableData"
+      @selection-change="handleSelectionChange">
       <template v-if="loginUser.isAdmin === 1">
         <el-table-column :selectable='checkboxT' type="selection" width="50" disabled='true'></el-table-column>
       </template>
@@ -25,7 +26,6 @@
       </el-table-column>
       <el-table-column label="操作">
         <template prop="isAdmin" slot-scope="scope">
-
           <template v-if="loginUser.isAdmin === 2">
             <el-button style="color:#F56C6C" type="text" @click="delPop(scope.row)">删除</el-button>
             <el-button type="text" @click="editPop(scope.row)">更改</el-button>
@@ -45,9 +45,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="totalLists" @current-change="handleCurrentChange">
+    <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="totalLists"
+      @current-change="handleCurrentChange">
     </el-pagination>
-
     <el-dialog :title="addCateTitle" :visible.sync="dialogEditCate">
       <el-form :model="rowEdit">
         <el-form-item label="用户账号">

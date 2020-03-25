@@ -1,14 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import { user_login } from '@/api/login/login'
 import cookie from '@/assets/js/cookie.js'
-import permission from './permission'
-Vue.use(Vuex)
 
-export default new Vuex.Store({
-  modules: {
-    permission
-  },
+const store = {
   // state全局状态树
   state: {
     loginUser: {},
@@ -90,4 +83,5 @@ export default new Vuex.Store({
       })
     }
   }
-});
+}
+export default store;

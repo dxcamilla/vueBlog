@@ -187,6 +187,9 @@
         cateId: ''
       }
     },
+    props: {
+      cateId: String
+    },
 
     mounted() {
       this.pageInit()

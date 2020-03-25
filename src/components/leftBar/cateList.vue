@@ -1,19 +1,18 @@
 <template>
-  <li class="side-list" v-if="item.children && item.children.length">
+  <div class="side-list" v-if="item.children && item.children.length">
     <i v-if="item.iconClass" :class="item.iconClass"></i>{{item.name}}
-    <ul class="sub-menu-ul">
+    <div class="sub-menu-ul">
       <cateList v-for="(subItem,index) of item.children" :item="subItem" :key="index" />
-    </ul>
-  </li>
-
-  <li v-else class="side-list">
-    <router-link :to="item.link">
+    </div>
+  </div>
+  <router-link v-else :to="item.link">
+    <div class="side-list">
       <div class="list-inner">
         <i v-if="item.iconClass" :class="item.iconClass"></i>
         {{item.name}}
       </div>
-    </router-link>
-  </li>
+    </div>
+  </router-link>
 </template>
 <script lang="javascript">
   export default {
@@ -26,17 +25,26 @@
 <style lang="scss">
   .side-list {
     cursor: pointer;
-    line-height: 60px;
+    line-height: 48px;
     margin-left: 60px;
     height: 60px;
 
+  }
+
+  .list-inner {
+    display: inline-block;
   }
 
   .side-list,
   .list-inner {
     color: #666;
     font-size: 16px;
-    font-weight: bold;
+    /* font-weight: bold; */
+  }
+
+  .router-link-exact-active .list-inner {
+    color: #fd4733;
+    border-bottom: 2px solid #fd4733
   }
 
   .sub-menu-ul {
@@ -55,6 +63,15 @@
   @media screen and (max-height: 599px) and (min-height: 500px) {
     .sub-menu-ul {
       max-height: 110px;
+    }
+  }
+
+  @media screen and (max-width:760px) {
+
+    .side-list,
+    .list-inner {
+      margin: 0;
+      text-align: center
     }
   }
 </style>

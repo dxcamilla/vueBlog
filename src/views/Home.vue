@@ -13,7 +13,7 @@
             <router-link to='/'><i class="icon-home"></i> 主页</router-link>
           </li>
           <li class="li">
-            <router-link to='/categories'><i class="icon-tags"></i> 分类</router-link>
+            <router-link :to="{name:'categories',params:{cateId:'all'}}"><i class="icon-tags"></i> 分类</router-link>
           </li>
           <li class="li">
             <router-link to='/about'><i class="icon-heart"></i>关于</router-link>
@@ -34,13 +34,22 @@
         <router-link to="/">
           <div class="tab-list cur"><i class="icon-home"></i> 主页</div>
         </router-link>
-        <router-link to="/categories">
+        <router-link :to="{name:'categories',params:{cateId:'all'}}">
           <div class="tab-list"><i class="icon-tags"></i> 分类</div>
         </router-link>
         <router-link to="/about">
           <div class="tab-list"><i class="icon-heart"></i> 关于</div>
         </router-link>
       </div>
+
+      <div v-for="(item,index) of ylist" :key="index">
+        <div v-html="vHtml"></div>
+      </div>
+
+      <input type="input" v-model="yname" />
+
+
+
       <div class="blog-part stick">
         <div class="chief-block">
           <div class="chief-tt blog-left">
@@ -53,7 +62,7 @@
           </div>
           <div class="chief-summary blog-right">
             <p class="summary">{{Content[0].summary}}</p>
-            <router-link :to="{path: '/detail', query: {contId: Content[0]._id}}" class="more">More</router-link>
+            <router-link :to="{name: 'detail', params: {contId: Content[0]._id}}" class="more">More</router-link>
           </div>
         </div>
       </div>
@@ -62,7 +71,7 @@
           <div class="chief-summary blog-left">
             <p class="summary">{{Content[1].summary}}</p>
             <!-- <a href="#" class="more">More</a> -->
-            <router-link :to="{path: '/detail', query: {contId: Content[1]._id}}" class="more">More</router-link>
+            <router-link :to="{name: 'detail', params: {contId: Content[1]._id}}" class="more">More</router-link>
           </div>
           <div class="chief-tt blog-right">
             <div class="tag">
@@ -91,16 +100,25 @@
         stickCont: {},
         lastCont: {},
         Content: [],
-        myImgBg: ''
+        myImgBg: '',
+        yname: "于洋是猪",
+        ylist: ["于晴", "于是", "于洋"]
+      }
+    },
+    computed: {
+      vHtml() {
+        return `<h1>我去去去</h1>`
+        // return (name) => {
+
+        // }
       }
     },
     mounted() {
-
       bubble();
       this.searchContent();
       this.aa();
-
     },
+
     methods: {
       aa() {
         const imgSrc = require('@/assets/img/me' + Math.ceil(Math.random() * 4) + '.jpg');
